@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "AI Coding Tutor - Antigravity",
+  "version": "1.0",
+  "description": "Pedagogical AI companion layer inside LeetCode that helps you understand rather than solve.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["sidebar.html", "sidebar.js", "sidebar.css"],
+      "matches": ["https://leetcode.com/*"]
+    }
+  ]
+}

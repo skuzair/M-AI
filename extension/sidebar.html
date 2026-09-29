@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Coding Tutor</title>
+  <link rel="stylesheet" href="sidebar.css">
+  <!-- Premium typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <div class="app-container">
+    
+    <!-- Sidebar Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="logo-text">
+          <h1>Antigravity</h1>
+          <span class="logo-tag">AI Tutor</span>
+        </div>
+      </div>
+      <button id="reset-btn" title="Reset Session and Learner Profile">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="app-nav">
+      <button class="nav-tab active" data-tab="chat-view">
+        <span>Tutor Chat</span>
+      </button>
+      <button class="nav-tab" data-tab="optimize-view">
+        <span>Optimization</span>
+      </button>
+      <button class="nav-tab" data-tab="profile-view">
+        <span>My Profile</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Panel -->
+    <main class="app-content">
+      
+      <!-- VIEW 1: Tutor Chat -->
+      <section id="chat-view" class="tab-panel active">
+        <!-- Scraped Context Status Banner -->
+        <div class="context-banner">
+          <div class="banner-info">
+            <span class="label">Context Captured:</span>
+            <span id="problem-title-display" class="value">No context synced</span>
+          </div>
+          <button id="sync-btn" class="secondary-btn" title="Scrape problem details and code from LeetCode page">
+            <span>Sync</span>
+          </button>
+        </div>
+
+        <!-- Chat Logs -->
+        <div id="chat-messages" class="chat-messages-container">
+          <!-- Seed welcome message -->
+          <div class="msg assistant-msg">
+            <div class="msg-avatar">A</div>
+            <div class="msg-bubble">
+              Hi! I'm your AI Coding Tutor. Click **Sync** to capture your LeetCode problem, then click **Analyze Code** to begin. I'll help you debug or optimize without giving away the direct solution.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tutor Suggestion/Action Area (e.g. Hint escalations) -->
+        <div id="tutor-controls" class="tutor-controls-panel hidden">
+          <div class="control-header">
+            <span class="tutor-mode-tag" id="tutor-mode-tag">Practice</span>
+            <span class="hint-level-display" id="hint-level-display"></span>
+          </div>
+          <div class="control-actions">
+            <button id="hint-btn" class="primary-btn pulse-effect">
+              <span>Ask for Next Hint</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Box Area -->
+        <div class="chat-input-area">
+          <!-- Text input box for general queries / teach back answers -->
+          <div class="input-container">
+            <textarea id="chat-input" placeholder="Type a message or answer the teach-back question..." rows="2"></textarea>
+            <button id="send-btn" class="icon-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <!-- Top-level action buttons -->
+          <div class="action-row">
+            <button id="analyze-btn" class="action-btn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Analyze Code</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: Optimization -->
+      <section id="optimize-view" class="tab-panel">
+        <div class="section-card">
+          <h2>Two Sum Optimization Tiers</h2>
+          <p class="description">Compare approaches to see how design and memory usage impacts performance.</p>
+          
+          <div class="tiers-comparison">
+            
+            <!-- Tier 1 -->
+            <div class="tier-card border-red" id="tier-brute">
+              <div class="tier-header">
+                <h3>Brute Force (Nested Loops)</h3>
+                <span class="complexity-badge bad">O(n²) Time</span>
+              </div>
+              <p>Checks every index pair to see if they sum up to target. Highly redundant scans.</p>
+              <div class="complexity-meters">
+                <div class="meter-row">
+                  <span>Time Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-red" style="width: 100%;"></div></div>
+                </div>
+                <div class="meter-row">
+                  <span>Space Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-green" style="width: 10%;"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tier 2 -->
+            <div class="tier-card border-yellow" id="tier-better">
+              <div class="tier-header">
+                <h3>Better (Sorting + Two Pointers)</h3>
+                <span class="complexity-badge medium">O(n log n) Time</span>
+              </div>
+              <p>Sorts the numbers first, then scans inwards with two pointers. Good space efficiency but requires sorting overhead.</p>
+              <div class="complexity-meters">
+                <div class="meter-row">
+                  <span>Time Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-yellow" style="width: 65%;"></div></div>
+                </div>
+                <div class="meter-row">
+                  <span>Space Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-green" style="width: 10%;"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="tier-card border-green" id="tier-optimal">
+              <div class="tier-header">
+                <h3>Optimal (One-Pass Hash Map)</h3>
+                <span class="complexity-badge good">O(n) Time</span>
+              </div>
+              <p>Builds a lookup dictionary as you traverse. Resolves complements in constant time O(1) average lookup.</p>
+              <div class="complexity-meters">
+                <div class="meter-row">
+                  <span>Time Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-green" style="width: 25%;"></div></div>
+                </div>
+                <div class="meter-row">
+                  <span>Space Complexity</span>
+                  <div class="meter-bar-container"><div class="meter-bar bg-yellow" style="width: 60%;"></div></div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: My Profile -->
+      <section id="profile-view" class="tab-panel">
+        <!-- Concept mastery scores -->
+        <div class="section-card">
+          <h2>Concept Mastery Profile</h2>
+          <div class="mastery-grid">
+            
+            <div class="mastery-card">
+              <span class="concept-title">Hash Maps</span>
+              <div class="progress-ring-container">
+                <span id="mastery-hash_maps" class="progress-val">72%</span>
+                <div class="progress-bar-linear"><div id="bar-hash_maps" class="progress-fill" style="width: 72%;"></div></div>
+              </div>
+            </div>
+
+            <div class="mastery-card">
+              <span class="concept-title">Complexity</span>
+              <div class="progress-ring-container">
+                <span id="mastery-complexity" class="progress-val">54%</span>
+                <div class="progress-bar-linear"><div id="bar-complexity" class="progress-fill" style="width: 54%;"></div></div>
+              </div>
+            </div>
+
+            <div class="mastery-card">
+              <span class="concept-title">Arrays</span>
+              <div class="progress-ring-container">
+                <span id="mastery-arrays" class="progress-val">60%</span>
+                <div class="progress-bar-linear"><div id="bar-arrays" class="progress-fill" style="width: 60%;"></div></div>
+              </div>
+            </div>
+
+            <div class="mastery-card">
+              <span class="concept-title">Two Pointers</span>
+              <div class="progress-ring-container">
+                <span id="mastery-two_pointers" class="progress-val">50%</span>
+                <div class="progress-bar-linear"><div id="bar-two_pointers" class="progress-fill" style="width: 50%;"></div></div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <!-- Personalized Recommendations -->
+        <div class="section-card" id="recommendation-card">
+          <h2>Next Recommended Practice</h2>
+          <div class="recommendation-box">
+            <h3 id="rec-concept">Sliding Window</h3>
+            <span id="rec-problem" class="rec-sub">Longest Substring Without Repeating Characters</span>
+            <p id="rec-explanation" class="rec-reason">
+              You successfully applied hash-based lookup, but your recent attempts still rely on repeated traversal. Sliding Window is recommended because it builds on your current understanding while strengthening efficient traversal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+  <script src="sidebar.js"></script>
+</body>
+</html>
